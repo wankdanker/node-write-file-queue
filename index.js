@@ -18,6 +18,7 @@ function WriteQueue(options) {
 
     self.options.retries = self.options.retries || 1000;
     self.options.waitTime = self.options.waitTime || 1000;
+    self.options.debug = self.options.debug || false;
 }
 
 WriteQueue.prototype.write = function (path, str, callback) {
@@ -46,17 +47,18 @@ WriteQueue.prototype.process = function () {
             , index = writeReq[4]
             ;
         
-        console.log('Attempting to write to file #%s @ %s'
+        self.options.debug && self.options.debug('Attempting to write to file #%s @ %s'
             , index, (new Date()).getTime());
     
         fs.writeFile(path, string, function (err) {
-            console.log('Callback from writeFile for file #%s @ %s'
+            self.options.debug && self.options.debug('Callback from writeFile for file #%s @ %s'
                 , index, (new Date()).getTime());
 
             if (err) {
-                console.log('Error occurred for writeFile for file #%s @ %s'
+                self.options.debug && self.options.debug('Error occurred for writeFile for file #%s @ %s'
                     , index, (new Date()).getTime());
-                console.log(err);
+
+                self.options.debug && self.options.debug(err);
                 
                 writeReq[3] += 1;
                 
