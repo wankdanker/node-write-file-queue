@@ -17,8 +17,9 @@ example/usage
 
 ```js
 var writeFile = require('write-file-queue')({
-    retries : 1000
-    , waitTime : 1000 /*milliseconds*/ 
+    retries : 1000 /* number of write attempts before failing */
+    , waitTime : 1000 /* number of milliseconds to wait between write attempts*/ 
+    , debug : console.error /* optionally pass a function to do dump debug information to */
 });
 
 writeFile('/dev/usb/lp0', 'data to send to lp0', function (err) {
